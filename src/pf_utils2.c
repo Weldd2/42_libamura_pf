@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils2.c                                        :+:      :+:    :+:   */
+/*   pf_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 20:26:09 by antoinemura       #+#    #+#             */
-/*   Updated: 2023/12/09 20:31:39 by antoinemura      ###   ########.fr       */
+/*   Updated: 2025/01/09 23:37:28 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "pf_printf.h"
 
-int	ft_putnbr_base_2(unsigned int nbr, char *base)
+int	pf_putnbr_base_2(unsigned int nbr, char *base)
 {
 	unsigned int	base_len;
 	int				count;
@@ -21,32 +21,27 @@ int	ft_putnbr_base_2(unsigned int nbr, char *base)
 	count = 0;
 	while (base[base_len])
 		base_len++;
-	if (nbr < 0)
-	{
-		count += ft_putchar('-');
-		nbr *= -1;
-	}
 	if (nbr >= base_len)
 	{
-		count += ft_putnbr_base_2(nbr / base_len, base);
-		count += ft_putnbr_base_2(nbr % base_len, base);
+		count += pf_putnbr_base_2(nbr / base_len, base);
+		count += pf_putnbr_base_2(nbr % base_len, base);
 	}
 	else
-		count += ft_putchar(base[nbr]);
+		count += pf_putchar(base[nbr]);
 	return (count);
 }
 
-int	ft_printaddr(void *addr)
+int	pf_printaddr(void *addr)
 {
-	ft_putchar('0');
-	ft_putchar('x');
-	return (2 + ft_putnbr_base((long)addr, "0123456789abcdef"));
+	pf_putchar('0');
+	pf_putchar('x');
+	return (2 + pf_putnbr_base((long)addr, "0123456789abcdef"));
 }
 
-int	ft_handle_x(va_list *ap)
+int	pf_handle_x(va_list *ap)
 {
 	int	s;
 
 	s = va_arg(*ap, int);
-	return (ft_putnbr_base_2(s, "0123456789abcdef"));
+	return (pf_putnbr_base_2(s, "0123456789abcdef"));
 }
